@@ -8,11 +8,14 @@
 [![Network](https://img.shields.io/badge/network-GenLayer%20Bradbury-7c6cff?style=flat-square)](https://explorer-bradbury.genlayer.com/address/0xBf42a47665B32180De8d8977f8A9439e919860B9)
 [![Frontend](https://img.shields.io/badge/frontend-Next.js%2014%20static-0b0a14?style=flat-square)](#run-it-locally)
 [![Contract](https://img.shields.io/badge/contract-GenVM%20Python-d8b25a?style=flat-square)](contracts/contract.py)
-[![Fees](https://img.shields.io/badge/cost-network%20fee%20only-9aa6bd?style=flat-square)](https://testnet-faucet.genlayer.foundation/)
 
 </div>
 
 ---
+
+**Live** &middot; [abstrusimad.github.io/palimpsest](https://abstrusimad.github.io/palimpsest/)  
+**Loremaster contract** &middot; `0xBf42a47665B32180De8d8977f8A9439e919860B9` &middot; [view on the Bradbury explorer](https://explorer-bradbury.genlayer.com/address/0xBf42a47665B32180De8d8977f8A9439e919860B9)  
+**First sealed in transaction** &middot; `0x72278c99cb6a063e8037b6a0e1183b84364825e3492217ffbffb6271a45cb405`
 
 Submit a fragment of lore. If it does not contradict what is already canon, it is sealed on chain and cross-linked into the world. If it does contradict, it is kept apart as apocrypha. If it is incoherent, it is struck. The judge is not a server with a delete key, it is a verdict that a network of validators has to agree on before it is written.
 
@@ -100,15 +103,5 @@ palimpsest/
     public/art/                the illuminated plates
   scripts/no-emoji.js          ship gate
 ```
-
-## Coordinates
-
-| | |
-| --- | --- |
-| Live | https://abstrusimad.github.io/palimpsest/ |
-| Contract | `0xBf42a47665B32180De8d8977f8A9439e919860B9` |
-| Explorer | [view on Bradbury](https://explorer-bradbury.genlayer.com/address/0xBf42a47665B32180De8d8977f8A9439e919860B9) |
-| Deploy tx | `0x72278c99cb6a063e8037b6a0e1183b84364825e3492217ffbffb6271a45cb405` |
-| Faucet | https://testnet-faucet.genlayer.foundation/ |
 
 <div align="center"><sub>Built on GenLayer. Lettered in IM Fell English and EB Garamond. No deposit is ever taken; a scribe pays only the network fee.</sub></div>
