@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+*.log
+__pycache__/
+.pytest_cache/
+artifacts/
+art/_gemgen.js
+art/_gemgen.log
+.DS_Store
