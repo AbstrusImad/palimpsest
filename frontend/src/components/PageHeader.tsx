@@ -27,14 +27,14 @@ export function PageHeader({
     <section className={`relative ${height} w-full overflow-hidden border-b border-[var(--hairline)]`}>
       {reduce ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={`/palimpsest${art}`} alt="" className="backdrop-img opacity-40" />
+        <img src={`/palimpsest${art}`} alt="" className="backdrop-img opacity-85" />
       ) : (
         <motion.img
           src={`/palimpsest${art}`}
           alt=""
-          className="backdrop-img opacity-40"
+          className="backdrop-img opacity-85"
           initial={{ scale: 1.08, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.4 }}
+          animate={{ scale: 1, opacity: 0.85 }}
           transition={{ duration: 1.4, ease: 'easeOut' }}
         />
       )}
@@ -42,7 +42,7 @@ export function PageHeader({
         className="absolute inset-0 z-[2]"
         style={{
           background:
-            'radial-gradient(120% 90% at 50% 10%, transparent 30%, rgba(12,10,20,0.7) 100%), linear-gradient(180deg, rgba(12,10,20,0.55), rgba(12,10,20,0.92))',
+            'radial-gradient(120% 90% at 50% 12%, transparent 48%, rgba(12,10,20,0.4) 100%), linear-gradient(180deg, rgba(12,10,20,0.12), rgba(12,10,20,0.88))',
         }}
         aria-hidden
       />

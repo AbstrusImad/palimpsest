@@ -29,14 +29,14 @@ function Home() {
       <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden border-b border-[var(--hairline)]">
         {reduce ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src="/palimpsest/art/cover.jpg" alt="" className="backdrop-img opacity-45" />
+          <img src="/palimpsest/art/cover.jpg" alt="" className="backdrop-img opacity-90" />
         ) : (
           <motion.img
             src="/palimpsest/art/cover.jpg"
             alt=""
-            className="backdrop-img opacity-45"
+            className="backdrop-img opacity-90"
             initial={{ scale: 1.1, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.45 }}
+            animate={{ scale: 1, opacity: 0.9 }}
             transition={{ duration: 1.8, ease: 'easeOut' }}
           />
         )}
@@ -44,7 +44,7 @@ function Home() {
           className="absolute inset-0 z-[2]"
           style={{
             background:
-              'radial-gradient(110% 80% at 50% 18%, transparent 26%, rgba(12,10,20,0.72) 100%), linear-gradient(180deg, rgba(12,10,20,0.45), rgba(12,10,20,0.9))',
+              'radial-gradient(115% 85% at 50% 20%, transparent 38%, rgba(12,10,20,0.5) 100%), linear-gradient(180deg, rgba(12,10,20,0.25), rgba(12,10,20,0.82))',
           }}
           aria-hidden
         />

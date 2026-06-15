@@ -61,7 +61,7 @@ function CanonMap() {
 
         <div className="vellum gilt relative overflow-hidden rounded-xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/palimpsest/art/atlas.jpg" alt="" className="backdrop-img opacity-20" />
+          <img src="/palimpsest/art/atlas.jpg" alt="" className="backdrop-img opacity-45" />
           <div
             className="absolute inset-0 z-[1]"
             style={{ background: 'linear-gradient(180deg, rgba(12,10,20,0.7), rgba(12,10,20,0.86))' }}
