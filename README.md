@@ -1,56 +1,114 @@
-# PALIMPSEST
+<div align="center">
 
-> One world, many hands. A shared mythology written by strangers and kept whole by an on-chain Loremaster.
+# Palimpsest
 
-*A palimpsest is a manuscript scraped clean and written over, the older text still bleeding through. This one is never scraped clean. Every hand that writes is judged against every hand that came before, and only what holds is kept.*
+**A shared fictional world, written by many hands and held consistent by an AI Loremaster that runs as a GenLayer Intelligent Contract.**
+
+[![Live](https://img.shields.io/badge/demo-live-46e08a?style=flat-square)](https://abstrusimad.github.io/palimpsest/)
+[![Network](https://img.shields.io/badge/network-GenLayer%20Bradbury-7c6cff?style=flat-square)](https://explorer-bradbury.genlayer.com/address/0xBf42a47665B32180De8d8977f8A9439e919860B9)
+[![Frontend](https://img.shields.io/badge/frontend-Next.js%2014%20static-0b0a14?style=flat-square)](#run-it-locally)
+[![Contract](https://img.shields.io/badge/contract-GenVM%20Python-d8b25a?style=flat-square)](contracts/contract.py)
+[![Fees](https://img.shields.io/badge/cost-network%20fee%20only-9aa6bd?style=flat-square)](https://testnet-faucet.genlayer.foundation/)
+
+</div>
 
 ---
 
-### The argument
+Submit a fragment of lore. If it does not contradict what is already canon, it is sealed on chain and cross-linked into the world. If it does contradict, it is kept apart as apocrypha. If it is incoherent, it is struck. The judge is not a server with a delete key, it is a verdict that a network of validators has to agree on before it is written.
 
-Most worlds belong to one author. This one belongs to everyone and to no one. A scribe sets down a fragment of lore, a figure, a place, an age, an artifact, an event, and submits it to the canon. It is not stored because it was submitted. It is stored because it does not break the world.
+## At a glance
 
-The judge is not a moderator with a delete key. It is an Intelligent Contract on GenLayer whose ruling is settled by validator consensus, written into the chain, and impossible to quietly revise.
+| | |
+| --- | --- |
+| What it is | A multi-page, collaborative worldbuilding encyclopedia |
+| The decision | Does a new entry stay consistent with the whole canon |
+| Settled by | GenLayer validator consensus, no central moderator |
+| Entry kinds | Figure, Place, Age, Artifact, Event |
+| Rulings | `CANONIZE`, `APOCRYPHA`, `REJECT` |
+| Frontend | Next.js 14 static export, eight routes, no backend |
+| Cost to write | A Bradbury network fee, mostly refunded; no deposit |
 
-### On the keeping of canon
+## How a page enters the canon
 
-When an entry arrives, the Loremaster reads it against a digest of the established canon and against the specific entries it claims to reference. Then it rules:
-
-- **Canonize.** The entry is coherent and contradicts nothing. It enters the canon and cross-links to what it touches.
-- **Apocrypha.** The entry belongs to the world but contradicts standing lore. It is kept, named, and filed among the contested leaves, with the entry it broke against recorded.
-- **Reject.** The entry is incoherent, empty of lore, or an attempt to seize the Loremaster's hand. It is struck from the record.
-
-The model proposes; the chain disposes. Every validator re-runs the same judgment and they must agree on the ruling exactly and on the consistency score within a tolerance. The verdict is never decided by byte-identical text, never by `strict_eq` over a generative answer. Deterministic code does the rest: it admits the canon, files the apocrypha, refuses duplicate titles, and records the cross-links. The prompt persuades. The code enforces.
-
-### The five kinds
-
-A figure who acted. A place that held. An age that turned. An artifact that endured. An event that broke or made the rest. Each entry declares its kind, and the kinds are how the codex sorts itself into a library.
-
-### The Loremaster's method, plainly
-
-- `scribe(title, kind, body, refs)` is the one write that needs the world's agreement. It is where lore is weighed.
-- `get_stats` counts the canon, the apocrypha, and every submission ever weighed.
-- `get_entries` turns the pages of the library, twenty at a time.
-- `get_entry` opens a single leaf in full, its body, its seal, its cross-links, the Loremaster's note.
-- `get_chronicle` reads the record of judgement, newest first, canonizations and contradictions and the struck.
-
-No deposit is ever asked. A scribe pays only the network's fee, mostly refunded after the ruling settles.
-
-### On the making
-
-PALIMPSEST is not one page that scrolls. It is a small illuminated site of many rooms, each its own route: the frontispiece, the Codex, a reading leaf, the Scriptorium where you scribe, the Canon Map that draws the cross-links as a living constellation, the Apocrypha, and the Chronicle. A static export bound from Next.js, lettered in IM Fell English and EB Garamond, illuminated with plates raised by a generative hand, and spoken to the chain through genlayer-js. There is no server. The contract is the only authority.
-
-### For the scribe who would deploy it
-
+```mermaid
+flowchart LR
+    A[Scribe writes an entry] --> B{Deterministic gate}
+    B -- title taken / too short / bad kind --> X[Rejected before any AI]
+    B -- valid --> C[Loremaster reads it against the canon digest + referenced entries]
+    C --> D{Consensus ruling}
+    D -- CANONIZE --> E[Sealed as canon, cross-linked]
+    D -- APOCRYPHA --> F[Filed as contested, contradiction recorded]
+    D -- REJECT --> G[Struck from the record]
+    E --> H[(On-chain world state)]
+    F --> H
 ```
+
+The model proposes a ruling; the chain disposes. A leader drafts the verdict, every validator re-runs the same judgement, and the network keeps the result only when they converge on the ruling and on the consistency score within a set tolerance. Deterministic code then does the irreversible part: it admits canon, files apocrypha, refuses duplicate titles, and records the cross-links. The prompt persuades. The code enforces.
+
+## Contract API
+
+`contracts/contract.py`, class `Palimpsest`.
+
+| Method | Type | Purpose |
+| --- | --- | --- |
+| `scribe(title, kind, body, refs)` | write, consensus | The one write that needs agreement: weigh an entry and rule on it |
+| `get_stats()` | view | Canon, apocrypha, and total submissions weighed |
+| `get_entries(start)` | view | A page of entries, twenty at a time |
+| `get_entry(id)` | view | One entry in full: body, seal, score, cross-links, note |
+| `get_chronicle(start)` | view | The record of judgement, newest first |
+
+## The application
+
+A static single page would not do the world justice, so the frontend is eight real routes under one illuminated shell.
+
+| Route | Room |
+| --- | --- |
+| `/` | Frontispiece and the state of the canon |
+| `/codex` | The library of canon entries, filterable by kind |
+| `/entry?id=` | A single leaf, read in full with its cross-links |
+| `/scribe` | The scriptorium, where you submit and watch consensus settle |
+| `/canon-map` | The cross-links drawn as a living constellation |
+| `/apocrypha` | The contested leaves and what they broke against |
+| `/chronicle` | Every ruling, canonization to struck |
+| `/loremaster` | How the keeper works and why it can be trusted |
+
+## Run it locally
+
+```bash
+# 1. validate and prove the ruling under real consensus
 genvm-lint lint contracts/contract.py
-gltest tests/integration/ -v -s --network studionet   # prove the ruling under consensus
-genlayer deploy --contract contracts/contract.py       # then bind it to Bradbury
-cd frontend && npm run build                            # the illuminated leaves
+gltest tests/integration/ -v -s --network studionet
+
+# 2. deploy to Bradbury, then wire the address into the frontend
+genlayer deploy --contract contracts/contract.py
+#    set CONTRACT_ADDRESS and DEPLOY_TX in frontend/src/lib/contract.ts
+
+# 3. build the static site
+cd frontend && npm install && npm run build   # output in ./out
 ```
 
-Set the deployed address into `frontend/src/lib/contract.ts`, then publish `frontend/out` to any static host.
+## Repository map
 
-### Colophon
+```
+palimpsest/
+  contracts/contract.py        the Loremaster, GenVM Python
+  tests/integration/           the StudioNet consensus test
+  frontend/
+    src/app/                   the eight routes + layout + globals
+    src/components/            PageHeader, ConsensusTheater, graph, toasts
+    src/lib/                   genlayer-js plumbing, formatters
+    public/art/                the illuminated plates
+  scripts/no-emoji.js          ship gate
+```
 
-Composed for GenLayer Bradbury Testnet and lettered in IM Fell English with EB Garamond. The work is read at https://abstrusimad.github.io/palimpsest/ and its source kept at https://github.com/AbstrusImad/palimpsest. The Loremaster resides at the contract 0xBf42a47665B32180De8d8977f8A9439e919860B9, viewable on the Bradbury explorer, and was first impressed in transaction 0x72278c99cb6a063e8037b6a0e1183b84364825e3492217ffbffb6271a45cb405. Test GEN for the scribe's fee is drawn from the faucet at https://testnet-faucet.genlayer.foundation/. No emoji marks these pages, and no long dash.
+## Coordinates
+
+| | |
+| --- | --- |
+| Live | https://abstrusimad.github.io/palimpsest/ |
+| Contract | `0xBf42a47665B32180De8d8977f8A9439e919860B9` |
+| Explorer | [view on Bradbury](https://explorer-bradbury.genlayer.com/address/0xBf42a47665B32180De8d8977f8A9439e919860B9) |
+| Deploy tx | `0x72278c99cb6a063e8037b6a0e1183b84364825e3492217ffbffb6271a45cb405` |
+| Faucet | https://testnet-faucet.genlayer.foundation/ |
+
+<div align="center"><sub>Built on GenLayer. Lettered in IM Fell English and EB Garamond. No deposit is ever taken; a scribe pays only the network fee.</sub></div>
